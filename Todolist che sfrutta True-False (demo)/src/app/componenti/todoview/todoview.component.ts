@@ -17,8 +17,6 @@ export class TodoviewComponent implements OnInit {
   showModify: boolean = true;
   id: number = 0;
   completed: boolean = false;
-  todocech: number = 0;
-  erase: number = 0;
   constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
@@ -26,7 +24,7 @@ export class TodoviewComponent implements OnInit {
     setTimeout(() => {
       this.messaggio = "non ci sono ToDo."; this.todo = this.todoService.getTodoList();
       if (this.todoService.Todolist.length > 0) {
-        this.messaggio = ""
+        this.messaggio = "";
       }
     }, 2000)
 
@@ -41,14 +39,12 @@ export class TodoviewComponent implements OnInit {
         alert("se vuoi aggiungere una nuova ToDo alla tua lista devi scrivermi qualcosa!")
         break;
       default:
-        this.todocech += 1;
         this.completed = false;
         this.messaggio = "Sto aggiungendo il tuo ToDo..."
 
         setTimeout(() => {
-          this.id = this.todoService.Todolist.length + 1;
+          this.id  += 1;
           let todo2 = new todo(this.id, this.title, this.completed);
-
           this.messaggio = "";
           this.todoService.addTodo(todo2); this.cechtodo2()
           this.title = "";
@@ -60,29 +56,22 @@ export class TodoviewComponent implements OnInit {
   }
 
   deleteTodos(elimina: Itodo): void {
-    this.erase += 1;
-    this.todocech -= 1;
-    console.log(this.erase)
     this.messaggioerase = "sto eliminando il ToDo...";
-    setTimeout(() => { this.messaggioerase = ""; this.todoService.removeTodo(elimina); this.id = this.todoService.Todolist.length; this.cechtodo2() }, 2000)
+    setTimeout(() => { this.messaggioerase = ""; this.todoService.removeTodo(elimina);  this.cechtodo2() }, 2000)
   }
   cech(id: number) {
-    this.todocech -= 1;
-    id -= this.erase;
     this.messaggioerase = "segno il ToDo come Completato...";
-    setTimeout(() => { this.messaggioerase = ""; this.todoService.cechTodo(id, this.todocech); this.cechtodo2() }, 2000)
+    setTimeout(() => { this.messaggioerase = ""; this.todoService.cechTodo(id); this.cechtodo2() }, 2000)
 
   }
   togglemodify(id: string) {
     document.getElementById(id)!.classList.toggle("displaynone")
   }
   cechtodo2() {
-    if (this.todocech <= 1) {
-      setTimeout(() => { this.erase = 0; }, 1000)
-
+    if (this.id <= 1) {
       this.messaggioerase = "Non Ci sono Todo";
     }
-    if (this.todocech >= 1) {
+    if (this.id >= 1) {
       this.messaggioerase = "";
     }
   }
