@@ -41,12 +41,11 @@ export class TodoviewComponent implements OnInit {
       default:
         this.completed = false;
         this.messaggio = "Sto aggiungendo il tuo ToDo..."
-
+        this.id  += 1;
         setTimeout(() => {
-          this.id  += 1;
           let todo2 = new todo(this.id, this.title, this.completed);
           this.messaggio = "";
-          this.todoService.addTodo(todo2); this.cechtodo2()
+          this.todoService.addTodo(todo2); 
           this.title = "";
         }, 2000)
 
@@ -57,22 +56,15 @@ export class TodoviewComponent implements OnInit {
 
   deleteTodos(elimina: Itodo): void {
     this.messaggioerase = "sto eliminando il ToDo...";
-    setTimeout(() => { this.messaggioerase = ""; this.todoService.removeTodo(elimina);  this.cechtodo2() }, 2000)
+    setTimeout(() => { this.messaggioerase = ""; this.todoService.removeTodo(elimina); }, 2000)
   }
-  cech(id: number) {
+  cech(id:Itodo) {
     this.messaggioerase = "segno il ToDo come Completato...";
-    setTimeout(() => { this.messaggioerase = ""; this.todoService.cechTodo(id); this.cechtodo2() }, 2000)
+    setTimeout(() => { this.messaggioerase = ""; this.todoService.cechTodo(id);}, 2000)
 
   }
   togglemodify(id: string) {
     document.getElementById(id)!.classList.toggle("displaynone")
   }
-  cechtodo2() {
-    if (this.id <= 1) {
-      this.messaggioerase = "Non Ci sono Todo";
-    }
-    if (this.id >= 1) {
-      this.messaggioerase = "";
-    }
-  }
+  
 }

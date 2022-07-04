@@ -28,13 +28,13 @@ export class TodoService {
 
   }
   addTodo(add: Itodo): void {
-    add.completed = false;
     this.Todolist.push(add);
   }
 
-  cechTodo(cech: number): void {
-      this.Todolist[cech].completed = true;
-      console.log(this.Todolist);
+  cechTodo(cech: Itodo): void {
+    let index = this.Todolist.indexOf(cech);
+      this.Todolist[index].completed = true;
+
     }
     
   }
